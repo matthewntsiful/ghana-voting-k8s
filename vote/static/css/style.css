@@ -1,0 +1,231 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(to right, #006B3F, #FCD116, #CE1126);
+    color: white;
+    padding: 25px;
+    text-align: center;
+    position: relative;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.header p {
+    margin: 5px 0 0;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.content {
+    padding: 25px;
+}
+
+/* Party grid layout */
+.party-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.party-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    background-color: #f8f9fa;
+    position: relative;
+}
+
+.party-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.party-card.selected {
+    background-color: #e8f4ff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+}
+
+.party-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.party-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border: 3px solid white;
+}
+
+.party-initials {
+    color: white;
+    font-weight: bold;
+    font-size: 28px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+}
+
+.party-name {
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.vote-button {
+    background: linear-gradient(to right, #006B3F, #008000);
+    color: white;
+    border: none;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 25px;
+    transition: all 0.3s;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.vote-button:hover {
+    background: linear-gradient(to right, #005030, #006B3F);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.vote-button:active {
+    transform: translateY(1px);
+}
+
+.footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #6c757d;
+    font-size: 14px;
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+
+.branding {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 10px;
+    color: #333;
+}
+
+/* Confirmation page styles */
+.confirmation {
+    background: linear-gradient(135deg, #006B3F, #005030);
+    color: white;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 20px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.party-badge {
+    background: white;
+    color: #006B3F;
+    padding: 15px 30px;
+    border-radius: 8px;
+    margin: 25px 0;
+    font-weight: bold;
+    font-size: 24px;
+    display: inline-block;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.party-badge::before {
+    content: "✓";
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: #006B3F;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255,255,255,0.3);
+    font-weight: 600;
+}
+
+.back-button:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+}
+
+/* Ghana flag colors for accent */
+.ghana-flag {
+    height: 5px;
+    width: 100%;
+    display: flex;
+}
+
+.ghana-red {
+    background-color: #CE1126;
+    flex: 1;
+}
+
+.ghana-gold {
+    background-color: #FCD116;
+    flex: 1;
+}
+
+.ghana-green {
+    background-color: #006B3F;
+    flex: 1;
+}
+
+/* Animation for confirmation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}

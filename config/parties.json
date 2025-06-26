@@ -1,0 +1,8 @@
+{
+  "NPP": {"name": "New Patriotic Party", "color": "#0F4CA8"},
+  "NDC": {"name": "National Democratic Congress", "color": "#006B3F"},
+  "CPP": {"name": "Convention People's Party", "color": "#D21034"},
+  "PNC": {"name": "People's National Convention", "color": "#FCD116"},
+  "GFP": {"name": "Ghana Freedom Party", "color": "#800080"},
+  "IND": {"name": "Independent Candidates", "color": "#808080"}
+}

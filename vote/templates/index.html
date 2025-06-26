@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ghana Election 2024 - Vote</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="ghana-flag">
+            <div class="ghana-red"></div>
+            <div class="ghana-gold"></div>
+            <div class="ghana-green"></div>
+        </div>
+        
+        <div class="header">
+            <h1>Ghana Election 2024</h1>
+            <p>Cast your vote for Ghana's future</p>
+        </div>
+        
+        <div class="content">
+            <form method="post" action="/vote">
+                <div class="party-grid">
+                    {% for code, party in parties.items() %}
+                    <label class="party-card" style="border-color: {{ party.color }};">
+                        <input type="radio" name="vote" value="{{ code }}" required>
+                        <div class="party-logo" style="background-color: {{ party.color }};">
+                            <span class="party-initials">{{ code }}</span>
+                        </div>
+                        <div class="party-name">{{ party.name }}</div>
+                    </label>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="vote-button">
+                    <i class="fas fa-check-circle"></i> Submit Vote
+                </button>
+            </form>
+            
+            <div class="footer">
+                <p><i class="fas fa-shield-alt"></i> Secure Voting System</p>
+                <p class="branding">Powered by Blakk Brother Inc.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add simple animation when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.party-card').forEach(function(card, index) {
+                setTimeout(function() {
+                    card.classList.add('fade-in');
+                }, index * 100);
+            });
+        });
+        
+        // Highlight selected option
+        document.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.party-card').forEach(function(card) {
+                    card.classList.remove('selected');
+                });
+                this.closest('.party-card').classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

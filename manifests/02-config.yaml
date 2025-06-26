@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: config
+data:
+  POSTGRES_USER: postgres
+  POSTGRES_DB: postgres
+  POSTGRES_HOST: postgres-service
+  REDIS_HOST: redis-service
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: config
+data:
+  POSTGRES_PASSWORD: cG9zdGdyZXM=

@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: database
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: database
+data:
+  init.sql: |
+    CREATE TABLE votes (
+        party_code VARCHAR(10) PRIMARY KEY,
+        party_name VARCHAR(100) NOT NULL,
+        count INT DEFAULT 0
+    );
+    INSERT INTO votes (party_code, party_name) VALUES 
+    ('NPP', 'New Patriotic Party'),
+    ('NDC', 'National Democratic Congress'),
+    ('CPP', 'Convention People''s Party'),
+    ('PNC', 'People''s National Convention'),
+    ('GFP', 'Ghana Freedom Party'),
+    ('IND', 'Independent Candidates');
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghana-voting
+      component: database
+  template:
+    metadata:
+      labels:
+        app: ghana-voting
+        component: database
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+        - name: init-scripts
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+      - name: init-scripts
+        configMap:
+          name: postgres-init
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: database
+spec:
+  selector:
+    app: ghana-voting
+    component: database
+  ports:
+  - port: 5432

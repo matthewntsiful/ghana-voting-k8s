@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghana Election Results</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --ghana-green: #006B3F;
+      --ghana-gold: #FCD116;
+      --ghana-red: #CE1126;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+    }
+    
+    .header {
+      background: linear-gradient(to right, var(--ghana-green), var(--ghana-gold), var(--ghana-red));
+      color: white;
+      padding: 25px;
+      text-align: center;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    
+    .header p {
+      margin: 5px 0 0;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+    
+    .ghana-flag {
+      height: 5px;
+      width: 100%;
+      display: flex;
+      margin-bottom: -5px;
+    }
+    
+    .ghana-red {
+      background-color: var(--ghana-red);
+      flex: 1;
+    }
+    
+    .ghana-gold {
+      background-color: var(--ghana-gold);
+      flex: 1;
+    }
+    
+    .ghana-green {
+      background-color: var(--ghana-green);
+      flex: 1;
+    }
+    
+    .results-container {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    
+    .party-bar {
+      height: 30px;
+      margin: 10px 0;
+      border-radius: 15px;
+      transition: width 1s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .party-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
+      background-size: 200% 100%;
+      animation: shine 2s infinite;
+    }
+    
+    @keyframes shine {
+      to {
+        background-position: 200% 0;
+      }
+    }
+    
+    .party-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    
+    .party-name {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    
+    .party-votes {
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .stats-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-align: center;
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+    }
+    
+    .stats-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stats-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: var(--ghana-green);
+    }
+    
+    .stats-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .stats-label {
+      color: #6c757d;
+      font-size: 14px;
+    }
+    
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      padding: 15px;
+    }
+    
+    .branding {
+      font-weight: 700;
+      font-size: 18px;
+      color: #333;
+      letter-spacing: 1px;
+    }
+    
+    .refresh-btn {
+      background-color: var(--ghana-green);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .refresh-btn:hover {
+      background-color: #005030;
+      transform: translateY(-2px);
+    }
+    
+    .refresh-btn:active {
+      transform: translateY(1px);
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .party-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      border: 2px solid white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .party-initials {
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="ghana-flag">
+      <div class="ghana-red"></div>
+      <div class="ghana-gold"></div>
+      <div class="ghana-green"></div>
+    </div>
+    
+    <div class="header">
+      <h1><i class="fas fa-chart-bar"></i> Ghana Election 2024 Results</h1>
+      <p>Live results dashboard</p>
+    </div>
+    
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="stats-card">
+          <div class="stats-icon"><i class="fas fa-users"></i></div>
+          <div class="stats-value" id="total-votes-value">0</div>
+          <div class="stats-label">Total Votes</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stats-card">
+          <div class="stats-icon"><i class="fas fa-trophy"></i></div>
+          <div class="stats-value" id="leading-party">-</div>
+          <div class="stats-label">Leading Party</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stats-card">
+          <div class="stats-icon"><i class="fas fa-clock"></i></div>
+          <div class="stats-value" id="last-updated-time">-</div>
+          <div class="stats-label">Last Updated</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="results-container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-poll"></i> Current Standings</h2>
+        <div>
+          <button class="refresh-btn" onclick="fetchResults()">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+        </div>
+      </div>
+      
+      <div id="results">
+        <div class="text-center py-5">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3">Loading results...</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p class="branding">Powered by Blakk Brother Inc.</p>
+    </div>
+  </div>
+
+  <script>
+    let resultsData = null;
+    
+    function fetchResults() {
+      const refreshBtn = document.querySelector('.refresh-btn');
+      if (refreshBtn) {
+        refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+        refreshBtn.disabled = true;
+      }
+      
+      fetch('/api/results')
+        .then(response => response.json())
+        .then(data => {
+          resultsData = data;
+          updateDashboard(data);
+          
+          if (refreshBtn) {
+            refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+            refreshBtn.disabled = false;
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching results:', error);
+          document.getElementById('results').innerHTML = '<div class="alert alert-danger">Error loading results. Please try again later.</div>';
+          
+          if (refreshBtn) {
+            refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+            refreshBtn.disabled = false;
+          }
+        });
+    }
+    
+    function updateDashboard(data) {
+      // Update stats cards
+      document.getElementById('total-votes-value').textContent = data.totalVotes.toLocaleString();
+      document.getElementById('last-updated-time').textContent = new Date(data.lastUpdated).toLocaleTimeString();
+      
+      // Find leading party
+      let leadingParty = '-';
+      if (data.results.length > 0) {
+        leadingParty = data.results[0].party_code;
+      }
+      document.getElementById('leading-party').textContent = leadingParty;
+      
+      // Update results
+      const resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = '';
+      
+      // Add results
+      data.results.forEach((result, index) => {
+        const row = document.createElement('div');
+        row.className = 'mb-4 fade-in';
+        row.style.animationDelay = `${index * 0.1}s`;
+        
+        // Add medal for top 3
+        let medal = '';
+        if (index === 0) {
+          medal = '<i class="fas fa-medal" style="color: gold; margin-right: 8px;"></i>';
+        } else if (index === 1) {
+          medal = '<i class="fas fa-medal" style="color: silver; margin-right: 8px;"></i>';
+        } else if (index === 2) {
+          medal = '<i class="fas fa-medal" style="color: #CD7F32; margin-right: 8px;"></i>';
+        }
+        
+        row.innerHTML = `
+          <div class="party-info">
+            <div class="party-name">
+              ${medal}
+              <div class="party-logo" style="background-color: ${result.color};">
+                <span class="party-initials">${result.party_code}</span>
+              </div>
+              ${result.name}
+            </div>
+            <div class="party-votes">${result.count.toLocaleString()} votes (${result.percentage}%)</div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar party-bar" 
+                 role="progressbar" 
+                 style="width: ${result.percentage}%; background-color: ${result.color};" 
+                 aria-valuenow="${result.percentage}" 
+                 aria-valuemin="0" 
+                 aria-valuemax="100"></div>
+          </div>
+        `;
+        
+        resultsContainer.appendChild(row);
+      });
+    }
+    
+    // Fetch results immediately and then every 5 seconds
+    fetchResults();
+    setInterval(fetchResults, 5000);
+  </script>
+</body>
+</html>

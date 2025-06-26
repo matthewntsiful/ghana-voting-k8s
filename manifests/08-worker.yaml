@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghana-voting
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: ghana-voting
+        component: worker
+    spec:
+      containers:
+      - name: worker
+        image: matthewntsiful/worker:latest
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secret

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vote Confirmed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="ghana-flag">
+            <div class="ghana-red"></div>
+            <div class="ghana-gold"></div>
+            <div class="ghana-green"></div>
+        </div>
+        
+        <div class="confirmation fade-in">
+            <h2><i class="fas fa-vote-yea"></i> Your Vote Has Been Successfully Recorded!</h2>
+            <div class="party-badge">{{ party_name }}</div>
+            <p>Thank you for participating in Ghana's democracy.</p>
+            <p>Your vote has been securely recorded and will be counted in the final results.</p>
+            <a href="/" class="back-button"><i class="fas fa-arrow-left"></i> Back to Voting</a>
+        </div>
+        
+        <div class="footer">
+            <p class="branding">Powered by Blakk Brother Inc.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Confetti effect for celebration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple confetti animation
+            const confettiColors = ['#006B3F', '#FCD116', '#CE1126', '#FFFFFF'];
+            const confettiContainer = document.createElement('div');
+            confettiContainer.style.position = 'fixed';
+            confettiContainer.style.top = '0';
+            confettiContainer.style.left = '0';
+            confettiContainer.style.width = '100%';
+            confettiContainer.style.height = '100%';
+            confettiContainer.style.pointerEvents = 'none';
+            confettiContainer.style.zIndex = '-1';
+            document.body.appendChild(confettiContainer);
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.borderRadius = '50%';
+                confetti.style.opacity = Math.random() * 0.7 + 0.3;
+                confettiContainer.appendChild(confetti);
+                
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 2;
+                
+                confetti.animate([
+                    { transform: 'translateY(0) rotate(0)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    delay: delay * 1000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)',
+                    fill: 'forwards'
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghana-voting
+      component: cache
+  template:
+    metadata:
+      labels:
+        app: ghana-voting
+        component: cache
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine
+        ports:
+        - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: cache
+spec:
+  selector:
+    app: ghana-voting
+    component: cache
+  ports:
+  - port: 6379

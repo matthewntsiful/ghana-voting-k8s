@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote-app
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ghana-voting
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: ghana-voting
+        component: frontend
+    spec:
+      containers:
+      - name: vote-app
+        image: matthewntsiful/vote:latest
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: app-config
+        volumeMounts:
+        - name: config
+          mountPath: /config
+      volumes:
+      - name: config
+        configMap:
+          name: parties-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vote-service
+  namespace: ghana-voting
+  labels:
+    app: ghana-voting
+    component: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: ghana-voting
+    component: frontend
+  ports:
+  - port: 80
