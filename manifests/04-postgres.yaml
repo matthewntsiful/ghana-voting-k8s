@@ -2,9 +2,9 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-pvc
-  namespace: ghana-voting
+  namespace: vote-app
   labels:
-    app: ghana-voting
+    app: vote-app
     component: database
 spec:
   accessModes: [ReadWriteOnce]
@@ -16,9 +16,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-init
-  namespace: ghana-voting
+  namespace: vote-app
   labels:
-    app: ghana-voting
+    app: vote-app
     component: database
 data:
   init.sql: |
@@ -39,20 +39,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
-  namespace: ghana-voting
+  namespace: vote-app
   labels:
-    app: ghana-voting
+    app: vote-app
     component: database
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ghana-voting
+      app: vote-app
       component: database
   template:
     metadata:
       labels:
-        app: ghana-voting
+        app: vote-app
         component: database
     spec:
       containers:
@@ -89,13 +89,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres-service
-  namespace: ghana-voting
+  namespace: vote-app
   labels:
-    app: ghana-voting
+    app: vote-app
     component: database
 spec:
   selector:
-    app: ghana-voting
+    app: vote-app
     component: database
   ports:
   - port: 5432

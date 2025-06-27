@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: worker
-  namespace: ghana-voting
+  namespace: vote-app
   labels:
-    app: ghana-voting
+    app: vote-app
     component: worker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ghana-voting
+      app: vote-app
       component: worker
   template:
     metadata:
       labels:
-        app: ghana-voting
+        app: vote-app
         component: worker
     spec:
       containers:

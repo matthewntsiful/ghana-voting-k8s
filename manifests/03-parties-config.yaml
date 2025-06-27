@@ -2,9 +2,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: parties-config
-  namespace: ghana-voting
+  namespace: vote-app
   labels:
-    app: ghana-voting
+    app: vote-app
     component: config
 data:
   parties.json: |

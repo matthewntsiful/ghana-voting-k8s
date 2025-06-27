@@ -2,9 +2,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-config
-  namespace: ghana-voting
+  namespace: vote-app
   labels:
-    app: ghana-voting
+    app: vote-app
     component: config
 data:
   POSTGRES_USER: postgres
@@ -16,9 +16,9 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: app-secret
-  namespace: ghana-voting
+  namespace: vote-app
   labels:
-    app: ghana-voting
+    app: vote-app
     component: config
 data:
   POSTGRES_PASSWORD: cG9zdGdyZXM=
