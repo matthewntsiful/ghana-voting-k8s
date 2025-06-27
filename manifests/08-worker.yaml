@@ -26,3 +26,17 @@ spec:
             name: app-config
         - secretRef:
             name: app-secret
+        volumeMounts:
+        - name: parties-config
+          mountPath: /config
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      volumes:
+      - name: parties-config
+        configMap:
+          name: parties-config
