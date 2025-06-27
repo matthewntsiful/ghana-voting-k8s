@@ -19,15 +19,16 @@ metadata:
   namespace: vote-app
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
     - host: worker.local
       http:
         paths:
-          - path: /
+          - path: /(.*)
             pathType: Prefix
             backend:
               service:
                 name: worker-service
                 port:
-                  number: 80
+                  number: 80            

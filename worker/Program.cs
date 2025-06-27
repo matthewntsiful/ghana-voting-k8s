@@ -1,7 +1,14 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 using StackExchange.Redis;
 using Npgsql;
 using System.Text.Json;
 using System.IO;
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet("/", () => "Worker is running!");
 
 // Load party configuration
 var partiesJson = File.ReadAllText("/config/parties.json");
@@ -42,4 +49,6 @@ sub.Subscribe("ghana_votes", (channel, partyCode) => {
 });
 
 Console.WriteLine("Worker started. Listening for Ghana votes...");
-await Task.Delay(-1); // Keep running
+
+// Run the web server and keep the worker running
+await app.RunAsync("http://0.0.0.0:80");

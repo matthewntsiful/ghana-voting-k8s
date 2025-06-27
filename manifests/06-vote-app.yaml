@@ -50,9 +50,10 @@ metadata:
     app: vote-app
     component: frontend
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: vote-app
     component: frontend
   ports:
   - port: 80
+    targetPort: 80
