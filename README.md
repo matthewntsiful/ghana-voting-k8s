@@ -69,6 +69,7 @@ A full-stack, cloud-native voting system for Ghana, built with Python, Node.js, 
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Kubernetes cluster (local: Minikube, Docker Desktop, or cloud)
 - kubectl configured
 - Docker (for building images)
@@ -100,11 +101,13 @@ kubectl apply -f manifests/
   127.0.0.1 vote-app.local
   127.0.0.1 result.vote-app.local
   127.0.0.1 worker.vote-app.local
+
   EOF
   ```
-- Vote app: http://vote-app.local
-- Results app: http://result.vote-app.local
-- Worker health: http://worker.vote-app.local
+
+- Vote app: <http://vote-app.local>
+- Results app: <http://result.vote-app.local>
+- Worker health: <http://worker.vote-app.local>
 
 ---
 
