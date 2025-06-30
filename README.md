@@ -96,11 +96,15 @@ kubectl apply -f manifests/
 - Add to /etc/hosts:
 
   ```bash
-  echo "127.0.0.1 vote.local worker.local" | sudo tee -a /etc/hosts
+  sudo tee -a /etc/hosts << EOF
+  127.0.0.1 vote-app.local
+  127.0.0.1 result.vote-app.local
+  127.0.0.1 worker.vote-app.local
+  EOF
   ```
-- Vote app: http://vote.local/vote
-- Results app: http://vote.local/results
-- Worker health: http://worker.local/
+- Vote app: http://vote-app.local
+- Results app: http://result.vote-app.local
+- Worker health: http://worker.vote-app.local
 
 ---
 
@@ -142,7 +146,7 @@ ghana-voting-k8s/
 - **07-result-app.yaml**: Results app deployment and service
 - **08-worker.yaml**: Worker deployment
 - **09-worker-service-ingress.yaml**: Worker service and Ingress
-- **10-ingress.yaml**: Ingress for vote and results apps
+- **10-ingress.yaml**: Unified ingress with subdomain routing for all apps
 
 ---
 
@@ -150,7 +154,7 @@ ghana-voting-k8s/
 
 - Use `kubectl logs` to view logs for each deployment
 - Use `kubectl get all -n vote-app` to check resource status
-- For Ingress issues, check the NGINX Ingress Controller and use `kubectl describe ingress ...`
+- For Ingress issues, ensure `ingressClassName: nginx` is set and check NGINX controller logs with `kubectl logs -n ingress-nginx deployment/ingress-nginx-controller`
 - Use `kubectl port-forward` for direct access to services
 - Health endpoints are available for all web services
 
