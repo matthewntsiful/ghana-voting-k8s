@@ -42,44 +42,49 @@ A full-stack, cloud-native voting system for Ghana, built with Python, Node.js, 
 
 ## 🏗️ Architecture
 
-<p align="right">
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#f0f0f0', 'primaryTextColor': '#333', 'primaryBorderColor': '#666', 'lineColor': '#333', 'tertiaryColor': '#f0f0f0', 'fontFamily': 'Arial'}}}%%
 flowchart TD
     subgraph Kubernetes Cluster
-        subgraph Ingress
-            A[NGINX Ingress Controller]
+        direction TB
+        
+        subgraph Ingress[Ingress Controller]
+            A[NGINX Ingress]
         end
         
-        subgraph vote-app Namespace
-            B[Vote App
-            <small>Python Flask</small>]
-            C[Result App
-            <small>Node.js</small>]
-            D[Worker
-            <small>C# .NET</small>]
-            E[Redis
-            <small>Message Queue</small>]
-            F[PostgreSQL
-            <small>Database</small>]
-            
-            A -->|/vote| B
-            A -->|/result| C
-            A -->|/health| D
-            B -->|Vote Events| E
-            D -->|Process Votes| E
-            D -->|Store Results| F
-            C -->|Read Results| F
+        subgraph vote-app[Vote App Namespace]
+            B[Vote App\n<small>Python Flask</small>]
+            C[Result App\n<small>Node.js</small>]
+            D[Worker\n<small>C# .NET</small>]
+            E[Redis\n<small>Message Queue</small>]
+            F[PostgreSQL\n<small>Database</small>]
         end
+        
+        %% Connections
+        A -->|"/vote"| B
+        A -->|"/result"| C
+        A -->|"/health"| D
+        B -->|Vote Events| E
+        D -->|Process Votes| E
+        D -->|Store Results| F
+        C -->|Read Results| F
+        
+        %% Styling
+        classDef ingress fill:#4a90e2,stroke:#333,stroke-width:2px,color:white
+        classDef python fill:#3776ab,stroke:#333,stroke-width:2px,color:white
+        classDef nodejs fill:#68a063,stroke:#333,stroke-width:2px,color:white
+        classDef csharp fill:#9b4f96,stroke:#333,stroke-width:2px,color:white
+        classDef redis fill:#d82c20,stroke:#333,stroke-width:2px,color:white
+        classDef postgres fill:#336791,stroke:#333,stroke-width:2px,color:white
+        
+        class A ingress
+        class B python
+        class C nodejs
+        class D csharp
+        class E redis
+        class F postgres
     end
-    
-    style A fill:#4a90e2,stroke:#333,stroke-width:2px,color:white
-    style B fill:#3776ab,stroke:#333,stroke-width:2px,color:white
-    style C fill:#68a063,stroke:#333,stroke-width:2px,color:white
-    style D fill:#9b4f96,stroke:#333,stroke-width:2px,color:white
-    style E fill:#d82c20,stroke:#333,stroke-width:2px,color:white
-    style F fill:#336791,stroke:#333,stroke-width:2px,color:white
 ```
-</p>
 
 ### Components
 
