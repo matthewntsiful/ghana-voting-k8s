@@ -42,27 +42,74 @@ A full-stack, cloud-native voting system for Ghana, built with Python, Node.js, 
 
 ## 🏗️ Architecture
 
-```text
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│   Vote App  │    │ Result App  │    │   Worker    │
-│  (Python)   │    │ (Node.js)   │    │    (C#)     │
-└─────────────┘    └─────────────┘    └─────────────┘
-       │                   │                   │
-       └───────────────────┼───────────────────┘
-                           │
-              ┌────────────┴────────────┐
-              │                         │
-         ┌─────────┐              ┌──────────┐
-         │  Redis  │              │PostgreSQL│
-         │ (Queue) │              │   (DB)   │
-         └─────────┘              └──────────┘
+<p align="right">
+```mermaid
+flowchart TD
+    subgraph Kubernetes Cluster
+        subgraph Ingress
+            A[NGINX Ingress Controller]
+        end
+        
+        subgraph vote-app Namespace
+            B[Vote App
+            <small>Python Flask</small>]
+            C[Result App
+            <small>Node.js</small>]
+            D[Worker
+            <small>C# .NET</small>]
+            E[Redis
+            <small>Message Queue</small>]
+            F[PostgreSQL
+            <small>Database</small>]
+            
+            A -->|/vote| B
+            A -->|/result| C
+            A -->|/health| D
+            B -->|Vote Events| E
+            D -->|Process Votes| E
+            D -->|Store Results| F
+            C -->|Read Results| F
+        end
+    end
+    
+    style A fill:#4a90e2,stroke:#333,stroke-width:2px,color:white
+    style B fill:#3776ab,stroke:#333,stroke-width:2px,color:white
+    style C fill:#68a063,stroke:#333,stroke-width:2px,color:white
+    style D fill:#9b4f96,stroke:#333,stroke-width:2px,color:white
+    style E fill:#d82c20,stroke:#333,stroke-width:2px,color:white
+    style F fill:#336791,stroke:#333,stroke-width:2px,color:white
 ```
+</p>
 
-- **Vote App**: Python Flask frontend for casting votes
-- **Result App**: Node.js dashboard for real-time results
-- **Worker**: C# .NET service processing votes from Redis to PostgreSQL, now with a health endpoint for Ingress
-- **Redis**: Message queue
-- **PostgreSQL**: Persistent storage
+### Components
+
+- **Vote App (Python Flask)**
+  - Web interface for users to cast votes
+  - Sends vote events to Redis queue
+  - Serves static content for the voting interface
+
+- **Result App (Node.js)**
+  - Real-time results dashboard
+  - Reads vote data from PostgreSQL
+  - Provides API endpoints for frontend data
+
+- **Worker (C# .NET)**
+  - Processes votes from Redis queue
+  - Updates PostgreSQL database with vote counts
+  - Implements health check endpoint
+
+- **Redis**
+  - Message broker between Vote App and Worker
+  - Ensures no votes are lost during processing
+
+- **PostgreSQL**
+  - Persistent storage for vote results
+  - Maintains data integrity and consistency
+
+- **NGINX Ingress Controller**
+  - Routes external traffic to appropriate services
+  - Handles SSL termination
+  - Manages load balancing
 
 ---
 
